@@ -1,41 +1,26 @@
-const sortFunc = (obj, [a, b]) => {
-  const startArr = Object.entries(obj);
+/* eslint-disable no-param-reassign */
+/* eslint-disable object-curly-newline */
+const takeInfo = ({ id, name, description, icon }) => {
+  if (!description) {
+    description = 'Описание недоступно';
+  }
+  const obj = { id, name, description, icon };
   const arr = [];
-  // eslint-disable-next-line guard-for-in
-  for (const item in startArr) {
-    const objToSort = {
-      key: startArr[item][0],
-      value: startArr[item][1],
-    };
-    if (objToSort.key === a) {
-      arr[0] = objToSort;
-    }
-    if (objToSort.key === b) {
-      arr[1] = objToSort;
+  for (const prop in obj) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (obj.hasOwnProperty(prop)) {
+      const objToSort = {
+        [prop]: obj[prop],
+      };
+      arr.push(objToSort);
     }
   }
-  startArr.forEach((item) => {
-    if (item[0] === 'name' || item[0] === 'level') {
-      startArr.splice(startArr.indexOf(item), 1);
-    }
-  });
-  startArr.sort();
-  // eslint-disable-next-line guard-for-in
-  for (const item in startArr) {
-    const objToSort = {
-      key: startArr[item][0],
-      value: startArr[item][1],
-    };
-    arr.push(objToSort);
-  }
+  return arr;
 };
 
-sortFunc({
-  name: 'мечник',
-  health: 10,
-  level: 2,
-  attack: 80,
-  defence: 40,
-}, ['name', 'level']);
-
-export default sortFunc;
+takeInfo({
+  id: 8,
+  name: 'Двойной выстрел',
+  icon: 'http://...',
+  description: 'Двойной выстрел наносит двойной урон',
+});
